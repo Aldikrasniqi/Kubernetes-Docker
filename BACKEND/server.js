@@ -1,8 +1,11 @@
-const express = require("express");
-const mongoose = require("mongoose"); 
-const bodyParser = require("body-parser"); 
-const cors = require("cors"); 
-const dotenv = require("dotenv"); 
+import express from 'express';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose'; //To connect with database
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { getUsers, addUser } from './controllers/user.js';
+// router = require('./routes/user.js');
+
 const app = express(); 
 dotenv.config();
 
@@ -10,6 +13,9 @@ const PORT = process.env.PORT || 8070;
 
 app.use(cors());
 app.use(bodyParser.json());
+
+app.post('/user', addUser);
+app.get('/user', getUsers);
 
 const URL = process.env.MONGODB_URL;
 
