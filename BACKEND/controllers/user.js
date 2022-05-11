@@ -5,6 +5,9 @@ import mongoose from "mongoose";
 export const getUsers = async (req,res) => {
     try {
         const users = await User.find();
+        if(res == undefined){
+            return users;
+        }
         res.status(200  ).json(users); //Sending OK http status code
     }catch (error){
         res.status(404).json({ message: error }); //Sending not found http status code
