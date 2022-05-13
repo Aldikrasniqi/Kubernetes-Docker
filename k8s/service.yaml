@@ -14,4 +14,3 @@ spec:
     app: ctse-app
 status:
   loadBalancer: {}
-  # kubectl expose deploy ctse-app --port 3000 --target-port 8070 - service/ctse-app exposed
