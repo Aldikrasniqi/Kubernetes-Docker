@@ -25,7 +25,7 @@ spec:
         app: ctse-app
     spec:
       containers:
-        - image: 19980517/ctse-app:fca5fda01a6d1cb9ad77aa55dde28278bb3727a9
+        - image: 19980517/ctse-app:efd3504236507abed30b0bf20a04ca5bc89f2894
           imagePullPolicy: Always
           name: ctse-app
           resources: {}
