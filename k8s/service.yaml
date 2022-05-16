@@ -6,6 +6,7 @@ metadata:
     app: ctse-app
   name: ctse-app
 spec:
+  type: LoadBalancer
   ports:
     - port: 8070
       protocol: TCP
