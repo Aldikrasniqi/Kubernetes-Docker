@@ -26,7 +26,7 @@ jobs:
       - name: Build product service docker image
         run: docker build . --file Dockerfile -t "$DOCKER_USER_NAME/$CLUSTER_NAME:latest"
       - name: Push product service docker image
-        run: docker push "$DOCKER_USERNAME/$CLUSTER_NAME:latest"
+        run: docker push "$DOCKER_USERNAME/$CLUSTER_NAME:ee9c95ebe0e465f7c4a2917cefc0bb5bc4eb84e9"
 
   build:
     runs-on: ubuntu-latest
