@@ -8,7 +8,7 @@ metadata:
 
 spec:
   containers:
-    - name: shop-user-pod
+    - name: server-user-pod
       image: 19980517/ctse-app
       ports:
         - containerPort: 8070
