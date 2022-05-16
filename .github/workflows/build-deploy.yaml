@@ -8,7 +8,7 @@ on:
 env:
   DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
   DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-  PRODUCT_REPO_NAME: ${{secrets.CLUSTER_NAME}}
+  CLUSTER_NAME: ${{secrets.CLUSTER_NAME}}
 
 jobs:
   product-service:
