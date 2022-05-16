@@ -36,7 +36,7 @@
         $(document).ready(function () {
             $.ajax({
                 type: "GET",
-                url: "http://localhost:8070/user",
+                url: $(location).attr('href') + "/user",
                 success: function (response) {
                     let out = "";
                     for(let user of response){
