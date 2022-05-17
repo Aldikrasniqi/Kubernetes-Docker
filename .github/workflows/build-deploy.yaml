@@ -8,7 +8,7 @@ on:
 env:
   DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
   DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-  CLUSTER_NAME: ${{secrets.CLUSTER_NAME}}
+  PRODUCT_REPO_NAME: ${{secrets.PRODUCT_REPO_NAME}}
 
 jobs:
   product-service:
@@ -19,14 +19,14 @@ jobs:
         run: |
           echo $DOCKER_USERNAME
           echo $DOCKER_PASSWORD
-          echo $CLUSTER_NAME
+          echo $PRODUCT_REPO_NAME
       - name: Docker login
         run: |
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
       - name: Build product service docker image
-        run: docker build . --file Dockerfile -t "$DOCKER_USERNAME/$CLUSTER_NAME:latest"
+        run: docker build . --file Dockerfile -t "$DOCKER_USERNAME/$PRODUCT_REPO_NAME:latest"
       - name: Push product service docker image
-        run: docker push "$DOCKER_USERNAME/$CLUSTER_NAME:latest"
+        run: docker push "$DOCKER_USERNAME/$PRODUCT_REPO_NAME:latest"
 
   build:
     runs-on: ubuntu-latest
