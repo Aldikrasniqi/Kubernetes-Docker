@@ -9,6 +9,6 @@ metadata:
 spec:
   containers:
     - name: server-user-pod
-      image: 19980517/ctse-app
+      image: 19980517/ctse-user
       ports:
         - containerPort: 8070
