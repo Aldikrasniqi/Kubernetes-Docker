@@ -20,6 +20,7 @@ app.set("view engine","ejs");
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+//routes
 app.post('/user', addUser);
 app.get('/user', getUsers);
 app.get('/', async (req,res) => {
