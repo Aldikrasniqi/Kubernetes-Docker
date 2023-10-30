@@ -3,7 +3,6 @@ name: Docker Build Deploy
 on:
   push:
     branches: [main]
-  workflow_dispatch
 
 env:
   DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
@@ -25,7 +24,7 @@ jobs:
 
       - name: Docker login
         run: |
-          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
