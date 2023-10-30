@@ -1,44 +1,56 @@
-name: Docker Build Deploy
+name: Docker Build Deploy  # Name of the GitHub Actions workflow.
 
-on:
-  push:
-    branches: [master]
-  workflow_dispatch:
+on:  # Events that trigger the workflow.
+  push:  # Triggered when code is pushed to the repository.
+    branches: [master]  # Specifically triggered for pushes to the 'master' branch.
+  workflow_dispatch:  # Triggered manually via the GitHub Actions UI.
 
-env:
-  DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
-  DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-  PRODUCT_REPO_NAME: ${{secrets.PRODUCT_REPO_NAME}}
+env:  # Environment variables used in the workflow.
+  DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}  # Set the Docker username from GitHub secrets.
+  DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}  # Set the Docker password from GitHub secrets.
+  PRODUCT_REPO_NAME: ${{secrets.PRODUCT_REPO_NAME}}  # Set the product repository name from GitHub secrets.
 
-jobs:
-  create-user-image:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Work Dir
+jobs:  # Define the jobs to be executed within the workflow.
+
+  create-user-image:  # Job to build and push a Docker image.
+    runs-on: ubuntu-latest  # The job runs on an Ubuntu-based runner.
+
+    steps:  # Steps to be executed in this job.
+
+      - uses: actions/checkout@v2  # Checks out the repository code.
+
+      - name: Work Dir  # A step to display environment variables.
         run: |
           echo $DOCKER_USERNAME
           echo $DOCKER_PASSWORD
           echo $PRODUCT_REPO_NAME
-      - name: Docker login
+
+      - name: Docker login  # Log in to Docker using environment variables.
         run: |
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-      - name: Build user service docker image
+
+      - name: Build user service docker image  # Build a Docker image.
         run: docker build . --file Dockerfile -t "$DOCKER_USERNAME/$PRODUCT_REPO_NAME:latest"
-      - name: Push user service docker image
+
+      - name: Push user service docker image  # Push the Docker image to a container registry.
         run: docker push "$DOCKER_USERNAME/$PRODUCT_REPO_NAME:latest"
 
-  deployment:
-    needs: [create-user-image]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - name: kubectl - Google Cloud GKE cluster.
+  deployment:  # Job for deploying to a Kubernetes cluster.
+    needs: [create-user-image]  # This job depends on the 'create-user-image' job.
+
+    runs-on: ubuntu-latest  # The job runs on an Ubuntu-based runner.
+
+    steps:  # Steps to be executed in this job.
+
+      - uses: actions/checkout@master  # Checks out the repository code (assumes the 'master' branch).
+
+      - name: kubectl - Google Cloud GKE cluster.  # Deploy to a Google Kubernetes Engine (GKE) cluster.
         uses: ameydev/gke-kubectl-action@master
-        env:
+        env:  # Environment variables used for GKE configuration.
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
           APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
           CLUSTER_NAME: ${{ secrets.CLUSTER_NAME }}
-          ZONE_NAME: us-central1-c
-        with:
-          args: apply -f k8s/
+          ZONE_NAME: us-central1-c  # The zone where the GKE cluster is located.
+
+        with:  # Run the 'kubectl' command with specified arguments.
+          args: apply -f k8s/  # Apply Kubernetes configuration files located in the 'k8s/' directory.

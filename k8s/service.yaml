@@ -1,13 +1,16 @@
 apiVersion: v1
 kind: Service
+# king is service because we are defining a service
 metadata:
   name: server-user-pod
   labels:
+  # labels are used to identify and group resources
     name: server-user-pod
     app: ctse-app
 
 spec:
   type: LoadBalancer
+  # load balancer help us to expose the service to outside world
   ports:
     - port: 8070
       targetPort: 8070

@@ -1,14 +1,15 @@
-apiVersion: v1
-kind: Pod
-metadata:
-  name: server-user-pod
-  labels:
-    name: server-user-pod
-    app: ctse-app
+apiVersion: v1  # Specifies the API version used for this YAML configuration.
+kind: Pod  # Indicates that you're defining a Kubernetes Pod. Pod is small linux container
 
-spec:
-  containers:
-    - name: server-user-pod
-      image: 19980517/ctse-user
-      ports:
-        - containerPort: 8070
+metadata:  # Metadata section for the Pod.
+  name: server-user-pod  # Assigns a name to the Pod, which is "server-user-pod."
+  labels:  # Labels are key-value pairs used to identify and group resources.
+    name: server-user-pod  # A label with the key "name" and value "server-user-pod."
+    app: ctse-app  # Another label with the key "app" and value "ctse-app."
+
+spec:  # The specification section that describes the desired state of the Pod.
+  containers:  # Describes the containers that will run in this Pod.
+    - name: server-user-pod  # Assigns a name to the container, which is "server-user-pod."
+      image: 19980517/ctse-user  # Specifies the Docker image to use for this container.
+      ports:  # Describes the network ports to open in the container.
+        - containerPort: 8070  # Specifies that the container should listen on port 8070.
